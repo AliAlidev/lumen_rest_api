@@ -2,6 +2,8 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use App\Models\Blog;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -15,4 +17,12 @@
 
 $router->get('/', function () use ($router) {
     return $router->app->version();
+});
+
+$router->group(['prefix' => 'api'], function () use ($router) {
+    $router->get('posts', 'BlogController@index');
+    $router->get('post/{id}', 'BlogController@show');
+    $router->put('post/{id}', 'BlogController@put');
+    $router->delete('post/{id}', 'BlogController@delete');
+    $router->post('post', 'BlogController@store');
 });
