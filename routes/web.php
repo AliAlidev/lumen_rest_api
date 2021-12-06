@@ -19,10 +19,17 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+
 $router->group(['prefix' => 'api'], function () use ($router) {
-    $router->get('posts', 'BlogController@index');
-    $router->get('post/{id}', 'BlogController@show');
-    $router->put('post/{id}', 'BlogController@put');
-    $router->delete('post/{id}', 'BlogController@delete');
-    $router->post('post', 'BlogController@store');
+    $router->post('login', 'AuthController@login');
+    $router->post('register', 'AuthController@register');
+    $router->post('logout', 'AuthController@logout');
+
+    $router->group(['middleware' => 'auth'], function () use($router) {
+        $router->get('posts', 'BlogController@index');
+        $router->get('post/{id}', 'BlogController@show');
+        $router->put('post/{id}', 'BlogController@put');
+        $router->delete('post/{id}', 'BlogController@delete');
+        $router->post('post', 'BlogController@store');
+    });
 });
