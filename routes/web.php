@@ -19,7 +19,10 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+
 $router->group(['prefix' => 'api'], function () use ($router) {
+    $router->post('me', 'AuthController@me');
+    $router->post('login', 'AuthController@login');
     $router->get('posts', 'BlogController@index');
     $router->get('post/{id}', 'BlogController@show');
     $router->put('post/{id}', 'BlogController@put');
